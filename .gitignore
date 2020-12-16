@@ -25,4 +25,8 @@ hs_err_pid*
 *.mp4
 *.jpg
 *.svg
+<<<<<<< HEAD
 *.png
+=======
+*.png
+>>>>>>> e3f120edf8275f5a1a6e09fe4e44d3b3b32bb98d
