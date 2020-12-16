@@ -1,8 +1,10 @@
 package com.luv2code.controller;
 
 
+import com.luv2code.Entity.Item;
 import com.luv2code.Entity.Manager;
 import com.luv2code.Entity.Student;
+import com.luv2code.service.ItemService;
 import com.luv2code.service.ManagerService;
 import com.luv2code.service.StudentService;
 import org.apache.commons.mail.DefaultAuthenticator;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -28,6 +31,8 @@ public class UserController {
     private StudentService studentService;
     @Autowired
     private ManagerService managerService;
+    @Autowired
+    private ItemService itemService;
 //
 //    @Autowired
 //    private
@@ -184,13 +189,17 @@ public class UserController {
         if(student == null){
             return "user-login";
         }
-
-        model.addAttribute("student",student);
+        List<Item> items = itemService.getItemsByStudent(student);
+//        model.addAttribute("student",student);
+        model.addAttribute("items",items);
         return "profile";
     }
 
     @PostMapping("/detail")
     public String editProfile(HttpServletRequest request){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
         if(student == null){
@@ -216,7 +225,27 @@ public class UserController {
         }
         return "profile";
     }
-
+    @PostMapping("updateStudent")
+    public String updateStudent(HttpServletRequest request, Model model){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Student student = (Student) session.getAttribute("student");
+        if(student == null){
+            return "user-login";
+        }
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String address = request.getParameter("address");
+        String college = request.getParameter("college");
+        student.setFirstName(firstname);
+        student.setLastName(lastname);
+        student.setAddress(address);
+        student.setCollege(college);
+        studentService.updateStudent(student);
+        return "profile";
+    }
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         if(request.getAttribute("unsafe_request") == "true") {

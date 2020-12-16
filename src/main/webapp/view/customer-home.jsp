@@ -50,10 +50,12 @@
             </form>
         </div>
     </div>
-   <c:forEach var="item" items="${list}">
-       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-           <figure class="effect-ming tm-video-item">
-               <img src="${contextPath}/img/${imgName}" alt="Image" class="img-fluid">
+    <div class="row tm-mb-90 tm-gallery">
+    <c:forEach var="item" items="${list}">
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+
+    <figure class="effect-ming tm-video-item">
+               <img src="${contextPath}/img/item/${item.id}.png" alt="Image" class="img-fluid" style="width: 420px; height: 200px;object-fit: cover">
                <figcaption class="d-flex align-items-center justify-content-center">
                    <h2>${item.name}</h2>
                    <a href="${contextPath}/item/detail/${item.id}">View more</a>
@@ -63,11 +65,13 @@
                <span>${item.name}</span>
                <span>${item.price}</span>
            </div>
-       </div>
-   </c:forEach>
+    </div>
+
+    </c:forEach>
+    </div>
 
 
-    </div> <!-- row -->
+</div> <!-- row -->
     <div class="row tm-mb-90">
         <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
             <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>

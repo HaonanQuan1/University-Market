@@ -57,7 +57,7 @@
     </video>
     <i id="tm-video-control-button" class="fas fa-pause"></i>
     <form class="d-flex position-absolute tm-search-form" method="post" action="${contextPath}/item/search">
-        <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search" name="search">
         <button class="btn btn-outline-success tm-search-btn" type="submit">
             <i class="fas fa-search"></i>
         </button>

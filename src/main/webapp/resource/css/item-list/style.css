@@ -1,0 +1,103 @@
+html {
+  background: linear-gradient(-45deg, #14181f, #525f7a);
+  padding: 1rem;
+}
+
+body {
+  background: linear-gradient(-45deg, #c2c9d6, #f0f1f5);
+  padding: 3rem;
+  color: #5c6370;
+}
+
+h1, h2, h3, legend, label, th {
+  color: #05132e;
+}
+
+h1 {
+  color: #ff0055;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 2.5rem;
+}
+
+h2 {
+  margin: 5rem 0 0;
+}
+h2::before {
+  display: block;
+  content: "";
+  height: 4px;
+  width: 7rem;
+  background: #5c85d6;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  margin: 1.5rem 0 0;
+  line-height: 1.5;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 2rem 0 0;
+  text-align: left;
+  width: 100%;
+}
+
+caption {
+  padding: 1rem;
+  font-style: italic;
+  font-size: 12px;
+  text-align: left;
+  caption-side: bottom;
+}
+
+tbody {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+thead {
+  background-color: rgba(240, 241, 245, 0.9);
+}
+thead th, thead td {
+  border-bottom-width: 2px;
+}
+
+th,
+td {
+  border: 1px solid #c2c9d6;
+  border-color: transparent transparent #c2c9d6 transparent;
+  padding: 1rem;
+}
+
+.compact th,
+.compact td {
+  padding: 0.5rem;
+}
+
+.bordered th,
+.bordered td {
+  border-color: #c2c9d6;
+}
+
+.striped tbody tr:nth-child(odd) {
+  background-color: #e5ecfa;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  background: #c2c9d6;
+  margin: 4rem 0;
+}
+
+code {
+  font-family: monospace;
+  font-weight: bold;
+  color: #332b00;
+  background: rgba(255, 213, 0, 0.8);
+  border-radius: 2px;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -4,13 +4,16 @@ import com.luv2code.Entity.Item;
 import com.luv2code.Entity.Student;
 import com.luv2code.service.ItemService;
 import com.luv2code.service.OrderDetailService;
+import com.luv2code.service.ShopCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -21,6 +24,8 @@ public class ItemController {
     private ItemService itemService;
     @Autowired
     private OrderDetailService orderDetailService;
+    @Autowired
+    private ShopCartService shopCartService;
 
     @GetMapping("/detail/{id}")
     public String getDetail(@PathVariable("id") int id, Model model, HttpServletRequest request){
@@ -52,8 +57,11 @@ public class ItemController {
 
         }
         String name = request.getParameter("search");
+        System.out.println("name "+name);
         List<Item> searchResult = itemService.getItems(name);
-        model.addAttribute("list",searchResult);
+        System.out.println(searchResult);
+        if(searchResult.size() > 10)searchResult = searchResult.subList(0,10);
+        model.addAttribute("searchResult",searchResult);
         return "search-result";
     }
     @GetMapping("/upload")
@@ -71,7 +79,7 @@ public class ItemController {
         return "item-upload";
     }
     @PostMapping("/uploadItem")
-    public String uploadItem(HttpServletRequest request){
+    public String uploadItem(HttpServletRequest request, @RequestParam("pic")MultipartFile multipartFile){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
         }
@@ -84,6 +92,7 @@ public class ItemController {
         String name = request.getParameter("name");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
+//        String pic = request.getParameter("pic");
         int num = Integer.parseInt(request.getParameter("num"));
         Item item = new Item();
         item.setName(name);
@@ -92,10 +101,59 @@ public class ItemController {
         item.setStudent(student);
         item.setNum(num);
         itemService.updateItem(item);
+//        item = itemService.get
+        String fileName = "";
+        System.out.println("start upload pic");
+        try {
+            if (multipartFile != null && !multipartFile.isEmpty()) {
+//                String fileRealPath = request.getSession().getServletContext().getRealPath("/resource/img/item");
+                String fileRealPath = new String("/Users/quanhaonan/Documents/Neu courses/Web Tools/Final Project/Final/src/main/webapp/resource/img/item");
+                System.out.println("fileRealPath "+fileRealPath);
+                int id = item.getId();
+                fileName = String.valueOf(id) + ".png";
+                System.out.println("fileName "+fileName);
+                File fileFolder = new File(fileRealPath);
+                System.out.println("fileRealPath=" + fileRealPath + "/" + fileName);
+                if (!fileFolder.exists()) {
+                    fileFolder.mkdirs();
+                }
+                System.out.println("start to make a file");
+                File file = new File(fileFolder, fileName);
+                multipartFile.transferTo(file);
+                System.out.println("finish file upload");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        item.setPic(fileName);
+        itemService.updateItem(item);
         return "redirect:/student/home";
 
     }
-
+    @PostMapping("/delete")
+    public String deleteItems(HttpServletRequest request){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Student student = (Student) session.getAttribute("student");
+        if(student == null){
+            return "redirect:/user/show";
+        }
+        String[] ids = request.getParameterValues("select");
+//        int[] theIds = new int[ids.length];
+        int id = -1;
+        for(int i = 0; i < ids.length; i++){
+//            theIds[i] = Integer.parseInt(ids[i])
+            id = Integer.parseInt(ids[i]);
+            if(id < 0) break;
+//            shopCartService.
+            shopCartService.deleteShopCartByItem(id);
+            orderDetailService.deleteOrderDetailByItem(id);
+            itemService.deleteItem(id);
+        }
+        return "profile";
+    }
     @GetMapping("/viewStudentItem")
     public String getMyItems(HttpServletRequest request,Model model){
         if(request.getAttribute("unsafe_request") == "true") {
@@ -154,12 +212,15 @@ public class ItemController {
         String price = request.getParameter("price");
         int num = Integer.parseInt(request.getParameter("num"));
         String description = request.getParameter("description");
+        String tag = request.getParameter("tag");
+        String pic = request.getParameter("pic");
         item.setNum(num);
         item.setDescription(description);
         item.setPrice(price);
         item.setName(name);
+        item.setTag(tag);
         itemService.updateItem(item);
-        return "redirect:/item/viewStudentItem";
+        return "redirect:/user/profile";
     }
     @GetMapping("/searchByTag/{tag}")
     public String searchByTag(@PathVariable("tag") String tag,HttpServletRequest request,Model model){

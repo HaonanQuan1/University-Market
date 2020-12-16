@@ -40,17 +40,17 @@ public class StudentController {
         }
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
+        if(student == null){
+            return "redirect:/user/show";
 
+        }
         List<Item> list = itemService.getItemsNoStudent(student);
         session.setAttribute("list",list);
 //        List<Item> studentlist = itemService.getItemsByStudent(student);
 
 //        for()
 //        model.addAttribute("list",list);
-        if(student == null){
-            return "redirect:/user/show";
 
-        }
         return "customer-home";
     }
 
@@ -67,7 +67,7 @@ public class StudentController {
         }
 //        System.out.println(student);
         List<ShopCart> list = shopCartService.getCarts(student);
-        model.addAttribute("list",list);
+        model.addAttribute("cart",list);
         return "shopCarts";
     }
     @GetMapping("/updateShopCarts/{id}")
@@ -89,7 +89,7 @@ public class StudentController {
         model.addAttribute("list",list);
         return "shopCarts";
     }
-    @PostMapping("/place")
+    @GetMapping("/place")
     public String placeOrder(HttpServletRequest request,Model model){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
@@ -138,9 +138,19 @@ public class StudentController {
 
         }
         Order order = orderService.getOrder(id);
-        student.setBalance(student.getBalance() - order.getTotalPrice());
-        studentService.updateStudent(student);
+//        student.setBalance(student.getBalance() - order.getTotalPrice());
+        String save = request.getParameter("save");
+        if(save!=null){
+            String firstName = request.getParameter("firstname");
+            String lastName = request.getParameter("lastname");
+            String address = request.getParameter("address1");
+            student.setFirstName(firstName);
+            student.setLastName(lastName);
+            student.setAddress(address);
+            studentService.updateStudent(student);
+        }
         List<OrderDetail> list = orderDetailService.getOrderDetails(order);
+
 //        for(OrderDetail detail:list){
 //            Item item = itemService.getItem(detail.getItem().getId());
 //            int num = detail.getNum();
@@ -172,9 +182,9 @@ public class StudentController {
 
         }
 //        List<Order> list = student.getOrders();
-        List<Order> list = orderService.getOrders(student);
-        System.out.println(list);
-        model.addAttribute("list",list);
+        List<Order> orderList = orderService.getOrders(student);
+//        System.out.println(list);
+        model.addAttribute("orderList",orderList);
         return "order-history";
     }
 
@@ -194,7 +204,7 @@ public class StudentController {
         return "order-details";
     }
 
-    @PostMapping("/addCart/{id}")
+    @GetMapping("/addCart/{id}")
     public String addToCart(@PathVariable("id") int id, HttpServletRequest request){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";

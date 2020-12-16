@@ -14,5 +14,6 @@ public interface ShopCartDAO {
     public void clearShopCart(int studentId);
     public void clearShopCart(Student student);
     public ShopCart getShopCart(int theId);
+    public void deleteShopCartByItem(int theId);
 //    public void deleteShopCartByStudent(int theId);
 }

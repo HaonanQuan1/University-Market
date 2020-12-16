@@ -42,6 +42,9 @@ public class Student{
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
+    @Column(name = "avatar")
+    private  String avatar;
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "student", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Item> myItems;
@@ -77,6 +80,19 @@ public class Student{
         }
         shopCarts.add(cart);
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public List<Order> getOrders() {
         return orders;
     }

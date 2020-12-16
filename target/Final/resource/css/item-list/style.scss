@@ -1,0 +1,98 @@
+$table-border-color: hsl(220, 20%, 80%);
+$table-stripe-color: hsl(220, 70%, 94%);
+html {
+  background: linear-gradient(-45deg, hsl(220, 20%, 10%), hsl(220, 20%, 40%));
+  padding: 1rem;
+}
+body {
+  background: linear-gradient(-45deg, hsl(220, 20%, 80%), hsl(220, 20%, 95%));
+  padding: 3rem;
+  color: hsl(220, 10%, 40%);
+}
+h1, h2, h3, legend, label, th {
+  color: hsl(220, 80%, 10%);
+}
+h1 {
+  color: hsl(340, 100%, 50%);
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 2.5rem;
+}
+h2 {
+  margin: 5rem 0 0;
+  &::before {
+    display: block;
+    content: "";
+    height: 4px;
+    width: 7rem;
+    background: hsla(220, 60%, 60%, 1);
+    margin-bottom: 1.5rem;
+  }
+}
+p {
+  margin: 1.5rem 0 0;
+  line-height: 1.5;
+}
+table {
+  //background: hsla(220, 0%, 100%, 0.9);
+  border-collapse: collapse;
+  margin: 2rem 0 0;
+  text-align: left;
+  width: 100%;
+}
+caption {
+  padding: 1rem;
+  font-style: italic;
+  font-size: 12px;
+  text-align: left;
+  caption-side: bottom;
+}
+tbody {
+  background-color: hsla(220, 0%, 100%, 0.9);
+}
+thead {
+  background-color: hsla(220, 20%, 95%, 0.9);
+  th, td {
+    border-bottom-width: 2px;
+  }
+}
+th, 
+td {
+  border: 1px solid $table-border-color;
+  border-color: transparent transparent $table-border-color transparent;
+  padding: 1rem;
+}
+.compact {
+  th, 
+  td {
+    padding: 0.5rem;
+  }
+}
+.bordered {
+  th, 
+  td {
+    border-color: hsl(220, 20%, 80%);
+  }
+}
+.striped {
+  tbody tr:nth-child(odd) {
+    background-color: $table-stripe-color;
+  }
+}
+
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  background: hsl(220, 20%, 80%);
+  margin: 4rem 0;
+}
+
+code {
+  font-family: monospace;
+  font-weight: bold;
+  color: hsl(50, 100%, 10%);
+  background: hsla(50, 100%, 50%, 0.8);
+  border-radius: 2px;
+}

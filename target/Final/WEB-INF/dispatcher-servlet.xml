@@ -26,4 +26,8 @@
         <!--            <bean class="com.luv2code.part5.interceptor.Xssinterceptor"/>-->
         <!--        </mvc:interceptor>-->
     </mvc:interceptors>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760" />
+    </bean>
 </beans>

@@ -13,6 +13,7 @@ public interface ShopCartService {
     public ShopCart getShopCart(int theId);
     public void clearShopCart(Student student);
     public void clearShopCart(int studentId);
+    public void deleteShopCartByItem(int theId);
 //    public void deleteShopCartByStudent(int theId);
 
 }

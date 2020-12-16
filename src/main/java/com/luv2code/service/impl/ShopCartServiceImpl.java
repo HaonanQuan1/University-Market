@@ -57,6 +57,12 @@ public class ShopCartServiceImpl implements ShopCartService {
         shopCartDAO.clearShopCart(studentId);
     }
 
+    @Override
+    @Transactional
+    public void deleteShopCartByItem(int theId) {
+        shopCartDAO.deleteShopCartByItem(theId);
+    }
+
 //    @Override
 //    public void deleteShopCartByStudent(int theId) {
 //        shopCartDAO.deleteShopCartByStudent(theId);

@@ -37,7 +37,7 @@
     </div>
     <div class="row tm-mb-90">
         <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-            <img src="${contextPath}/img/${item.pic}" alt="Image" class="img-fluid">
+            <img src="${contextPath}/img/item/${item.pic}" alt="Image" class="img-fluid">
         </div>
         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
             <div class="tm-bg-gray tm-video-details">
@@ -60,7 +60,9 @@
                     <a href="${contextPath}/item/searchByTag/${item.tag}" class="tm-text-primary mr-4 mb-2 d-inline-block">${item.tag}</a>
                 </div>
                     <div class="text-center mb-5">
-                        <a href="${contextPath}/student/addCart/${item.id}" class="btn btn-primary tm-btn-big" >Add to Cart</a>
+                        <c:if test="${sessionScope.student.id != item.student.id}">
+                            <a href="${contextPath}/student/addCart/${item.id}" class="btn btn-primary tm-btn-big" >Add to Cart</a>
+                        </c:if>
                     </div>
                 </form>
             </div>

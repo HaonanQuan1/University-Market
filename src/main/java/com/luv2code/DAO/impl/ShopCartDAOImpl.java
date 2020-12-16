@@ -108,6 +108,19 @@ public class ShopCartDAOImpl implements ShopCartDAO {
         return session.get(ShopCart.class,theId);
     }
 
+    @Override
+    public void deleteShopCartByItem(int theId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<ShopCart> query = null;
+        try{
+            query = session.createQuery("delete from ShopCart where item.id =: theId");
+            query.setParameter("theId",theId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        query.executeUpdate();
+    }
+
 //    @Override
 //    public void deleteShopCartByStudent(int theId) {
 //        Session session = sessionFactory.getCurrentSession();
