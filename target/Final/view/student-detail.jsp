@@ -73,7 +73,7 @@
             Phone:
         </td>
         <td>
-            <input type="text" name="phone" value="${student.phoneNumber}">
+            <input type="tel" name="phone" value="${student.phoneNumber}">
         </td>
     </tr>
     <tr>
@@ -81,7 +81,7 @@
             Email:
         </td>
         <td>
-            <input type="text" name="email" value="${student.email}">
+            <input type="email" name="email" value="${student.email}">
         </td>
     </tr>
     <tr>
@@ -97,7 +97,7 @@
             UserName:
         </td>
         <td>
-            <input type="text" name="username" value="${student.userName}">
+            <input type="text" name="username" value="${student.userName}" disabled>
         </td>
     </tr>
     <tr>
@@ -105,20 +105,20 @@
             Password:
         </td>
         <td>
-            <input type="text" name="password" value="${student.password}">
+            <input type="password" name="password" value="${student.password}" pattern=".{5,12}" required title="5 to 12 chatacters">
         </td>
     </tr>
-    <tr>
-        <td>
-            Balance:
-        </td>
-        <td>
-            <input type="text" name="balance" value="${student.balance}">
-        </td>
-    </tr>
+<%--    <tr>--%>
+<%--        <td>--%>
+<%--            Balance:--%>
+<%--        </td>--%>
+<%--        <td>--%>
+<%--            <input type="text" name="balance" value="${student.balance}">--%>
+<%--        </td>--%>
+<%--    </tr>--%>
 <%--                </c:forEach>--%>
             </table>
-                <input type="submit" value="submit">
+                <input class="btn btn-info" type="submit" value="submit">
             </form>
         </div>
     </div>

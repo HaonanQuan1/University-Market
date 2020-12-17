@@ -6,10 +6,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,6 +42,7 @@ public class StudentController {
 
         }
         List<Item> list = itemService.getItemsNoStudent(student);
+        list =  list.subList(0,list.size()/2);
         session.setAttribute("list",list);
 //        List<Item> studentlist = itemService.getItemsByStudent(student);
 
@@ -86,7 +84,7 @@ public class StudentController {
 //        for(int i = 0; i < list.size(); i++){
 //            System.out.println(list.get(i));
 //        }
-        model.addAttribute("list",list);
+        model.addAttribute("cart",list);
         return "shopCarts";
     }
     @GetMapping("/place")
@@ -182,8 +180,12 @@ public class StudentController {
 
         }
 //        List<Order> list = student.getOrders();
-        List<Order> orderList = orderService.getOrders(student);
+        List<Order> list = orderService.getOrders(student);
 //        System.out.println(list);
+        List<Order> orderList = new ArrayList<>();
+        for(int i = list.size() - 1; i >= 0; i--){
+            orderList.add(list.get(i));
+        }
         model.addAttribute("orderList",orderList);
         return "order-history";
     }

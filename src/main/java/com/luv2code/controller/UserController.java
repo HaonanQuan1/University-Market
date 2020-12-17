@@ -17,9 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
@@ -61,9 +64,6 @@ public class UserController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String role = "Student";
-        System.out.println("userName " + username);
-        System.out.println("password "+password);
-        System.out.println("role "+role);
 //        if(role == null){
 //            model.addAttribute("message","Select Your Role!");
 //            return "user-login";
@@ -108,10 +108,23 @@ public class UserController {
         }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        if(password.length() < 6){
+            model.addAttribute("message","Please Enter at least 6 length password");
+            return "register-form";
+        }
         String email = request.getParameter("Email");
-        System.out.println("username "+username);
-        System.out.println("email "+email);
-        System.out.println("password "+password);
+        boolean emailExist = false;
+        emailExist = studentService.checkStudent(email);
+        if(emailExist){
+            model.addAttribute("message","Email Has been used!");
+            return "register-form";
+        }
+        boolean usernameExist = false;
+        usernameExist = studentService.checkStudent(username);
+        if(usernameExist){
+            model.addAttribute("message","Username Has been used!");
+            return "register-form";
+        }
         String role = "Student";
         if(username == null || username.length() == 0){
             model.addAttribute("message","username can not be null");
@@ -120,10 +133,10 @@ public class UserController {
             model.addAttribute("message","password can not be null");
             return "register-form";
         }else if(email == null || email.length() == 0){
-            model.addAttribute("mes","email can not be null");
+            model.addAttribute("message","email can not be null");
             return "register-form";
         }else if(role == null){
-            model.addAttribute("mes","Select Your Role");
+            model.addAttribute("message","Select Your Role");
             return "register-form";
         }
         if(role != null && role.equals("Student")){
@@ -132,7 +145,7 @@ public class UserController {
 
         }else if(role != null && role.equals("Manager")){
             if(!managerService.checkManager(email)){
-                model.addAttribute("mes","You Don't Have the Access to Be A Manager");
+                model.addAttribute("message","You Don't Have the Access to Be A Manager");
                 return "register-form";
             }
             Manager manager = new Manager(username,password,email);
@@ -226,7 +239,7 @@ public class UserController {
         return "profile";
     }
     @PostMapping("updateStudent")
-    public String updateStudent(HttpServletRequest request, Model model){
+    public String updateStudent(HttpServletRequest request, Model model, @RequestParam("pic")MultipartFile multipartFile){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
         }
@@ -243,6 +256,29 @@ public class UserController {
         student.setLastName(lastname);
         student.setAddress(address);
         student.setCollege(college);
+        String fileName = "";
+        try{
+            if(multipartFile != null && !multipartFile.isEmpty()){
+                String fileRealPath = new String("/Users/quanhaonan/Documents/Neu courses/Web Tools/Final Project/Final/src/main/webapp/resource/img/student");
+
+                int id = student.getId();
+                fileName = String.valueOf(id) + ".png";
+                File fileFolder = new File(fileRealPath);
+                if(!fileFolder.exists()){
+                    fileFolder.mkdir();
+                }
+                File file = new File(fileFolder,fileName);
+                if(file.exists()){
+                    file.delete();
+//                    File fileFolder = new File(fileRealPath);
+                    file = new File(fileFolder,fileName);
+                }
+                multipartFile.transferTo(file);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         studentService.updateStudent(student);
         return "profile";
     }

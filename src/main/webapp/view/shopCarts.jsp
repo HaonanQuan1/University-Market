@@ -14,6 +14,7 @@
 <html>
 <head>
     <link href="${contextPath}/css/shopcart/shopcart.css" type="text/css" rel="stylesheet">
+    <title>University Market</title>
 </head>
 <body>
 <%@include file="header.jsp"%>
@@ -37,18 +38,20 @@
 
                     <div class="infoWrap">
                         <div class="cartSection">
-                            <img src="${contextPath}/img/${shop.item.pic}" alt="" class="itemImg" />
-                            <p class="itemNumber">#QUE-007544-002</p>
+                            <input type="hidden" value="${shop.item.id}" id="id">
+                            <img src="${contextPath}/img/item/${shop.item.id}.png" alt="" class="itemImg" />
+<%--                            <p class="itemNumber">#QUE-007544-002</p>--%>
                             <h3>${shop.item.name}</h3>
-
-                            <p> <input type="text"  class="qty" placeholder="1" name="num" /> x $${shop.item.price}</p>
-
+<%--                            <form action="${}"--%>
+                            <p>${shop.item.description}</p>
+<%--                            <p> <input type="text"  class="qty" placeholder="1" name="num" id="num" onkeyup="checkNum()" /> x $${shop.item.price}</p>--%>
+<%--                            <input type="hidden" id="price" value="${shop.item.price}">--%>
 <%--                            <p class="stockStatus"> In Stock</p>--%>
                         </div>
 
 
                         <div class="prodTotal cartSection">
-                            <p>${shop.num * shop.item.price}</p>
+                            <p id="total">$${shop.num * shop.item.price}</p>
                         </div>
                         <div class="cartSection removeWrap">
                             <a href="${contextPath}/student/updateShopCarts/${shop.id}" class="remove">x</a>
@@ -82,6 +85,48 @@
 <%--<%@include file="footer.jsp"%>--%>
 <script type="text/javascript" src="${contextPath}/js/shopcart/shopcart.js"/>
 <script type="text/javascript" src="${contextPath}/js/loginform/jquery-3.2.1.min.js"/>
+<%--<script>--%>
+<%--    function checkNum(){--%>
+<%--        var xmlHttp;--%>
+<%--        try // Firefox, Opera 8.0+, Safari--%>
+<%--        {--%>
+<%--            xmlHttp = new XMLHttpRequest();--%>
+<%--        } catch (e) {--%>
+<%--            try // Internet Explorer--%>
+<%--            {--%>
+<%--                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");--%>
+<%--            } catch (e) {--%>
+<%--                try {--%>
+<%--                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");--%>
+<%--                } catch (e) {--%>
+<%--                    alert("Your browser does not support AJAX!");--%>
+<%--                    return false;--%>
+<%--                }--%>
+<%--            }--%>
+<%--        }--%>
+<%--        xmlHttp.onreadystatechange = function() {--%>
+<%--            if (xmlHttp.readyState == 4) {--%>
+<%--                document.getElementById("num").innerHTML = xmlHttp.responseText;--%>
+<%--                // document.getElementById("total").innerText = document.getElementById("num")*document.getElementById()--%>
+<%--                // var usernameHint = document.getElementById("usernameHint")--%>
+<%--                // document.getElementById("signup").disable = true;--%>
+<%--                updateTotalPrice();--%>
+<%--            }--%>
+<%--        }--%>
+<%--        var num = document.getElementById("num").value;--%>
+<%--        var id = document.getElementById("id").value;--%>
+<%--        alert(num);--%>
+<%--        xmlHttp.open("POST", "../updateShopCartNum?num="+num, true);--%>
+<%--        xmlHttp.send();--%>
+<%--    }--%>
+<%--    function updateTotalPrice(){--%>
+<%--        var total = 0;--%>
+<%--        var num = document.getElementById("num").value();--%>
+<%--        var price = document.getElementById("price").value();--%>
+<%--        total = num * price;--%>
+<%--        document.getElementById("total").innerHTML = total;--%>
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>
 <%--<html>--%>

@@ -11,6 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ page session="false"%>
+<c:set var="mes" value="${message}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,7 +125,7 @@
 
 
                 <div class="wrap-input100 validate-input" data-validate = "Please enter password">
-                    <input class="input100" type="password" name="password" placeholder="Password">
+                    <input class="input100" type="password" name="password" placeholder="The Length Must be at least 6">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -136,6 +137,7 @@
                     <a href="#" class="txt2">
                         Username / Password?
                     </a>
+
                 </div>
                 <div class="container-login100-form-btn">
                     <input class="login100-form-btn" type="submit"  value="Sign Up" id="signup">
@@ -150,6 +152,10 @@
                     <%--                    <input class="input100" type="text" name="username" placeholder="Username">--%>
                     <span class="focus-input100" id="emailHint"></span>
                 </div>
+                <br>
+                <c:if test="${mes != null}">
+                    <span>${mes}</span>
+                </c:if>
                 <div class="flex-col-c p-t-170 p-b-40">
 						<span class="txt1 p-b-9">
 							Don’t have an account?

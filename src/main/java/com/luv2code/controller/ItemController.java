@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,8 +42,14 @@ public class ItemController {
         Item item = itemService.getItem(id);
         model.addAttribute("item",item);
         List<Item> list = itemService.getItemsByTag(item.getTag());
+        List<Item> items = new ArrayList<>();
+        for(Item item1 :list){
+            if(item1.getId() != item.getId()){
+                items.add(item1);
+            }
+        }
 //        model.addAttribute("list",list);/
-        request.setAttribute("list",list);
+        request.setAttribute("list",items);
         return "item-detail";
     }
     @PostMapping("/search")
@@ -117,9 +124,15 @@ public class ItemController {
                 if (!fileFolder.exists()) {
                     fileFolder.mkdirs();
                 }
+//                if(f)
                 System.out.println("start to make a file");
                 File file = new File(fileFolder, fileName);
+                if(file.exists()){
+                    file.delete();
+                    file = new File(fileFolder,fileName);
+                }
                 multipartFile.transferTo(file);
+
                 System.out.println("finish file upload");
             }
         }catch (Exception e){
@@ -197,7 +210,7 @@ public class ItemController {
         return "edit-item";
     }
     @PostMapping("/editItem")
-    public String editItem(HttpServletRequest request){
+    public String editItem(HttpServletRequest request,@RequestParam("pic") MultipartFile multipartFile){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
         }
@@ -219,6 +232,32 @@ public class ItemController {
         item.setPrice(price);
         item.setName(name);
         item.setTag(tag);
+        String fileName = "";
+        try {
+            if (multipartFile != null && !multipartFile.isEmpty()) {
+//                String fileRealPath = request.getSession().getServletContext().getRealPath("/resource/img/item");
+                String fileRealPath = new String("/Users/quanhaonan/Documents/Neu courses/Web Tools/Final Project/Final/src/main/webapp/resource/img/item");
+                System.out.println("fileRealPath "+fileRealPath);
+//                int id = item.getId();
+                fileName = String.valueOf(id) + ".png";
+                System.out.println("fileName "+fileName);
+                File fileFolder = new File(fileRealPath);
+                System.out.println("fileRealPath=" + fileRealPath + "/" + fileName);
+                if (!fileFolder.exists()) {
+                    fileFolder.mkdirs();
+                }
+//                if(f)
+                File file = new File(fileFolder, fileName);
+                if(file.exists()){
+                    file.delete();
+                    file = new File(fileFolder,fileName);
+                }
+                multipartFile.transferTo(file);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         itemService.updateItem(item);
         return "redirect:/user/profile";
     }

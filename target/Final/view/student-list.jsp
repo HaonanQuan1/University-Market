@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="list" value="${studentList}"/>
+<c:set var="page" value="${paging}"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,6 +42,8 @@
 <body>
     <div class="table table-striped table-hover">
         <div class="row">
+            <form action="${contextPath}/manager/deleteStudent" method="post">
+
             <table class="table-hover table table-striped col-md-10 col-sm-10">
                 <thead>
                     <tr>
@@ -60,13 +63,15 @@
                             Address:
                         </td>
                         <td>
-                            Phone:
+                            UserName:
                         </td>
                         <td>
                             College:
                         </td>
+
+                        <td><input type="checkbox" id="top_cb" /></td>
                         <td>
-                            Balance:
+                            <input class="btn  btn-danger" type="submit" value="Delete">
                         </td>
                     </tr>
                 </thead>
@@ -77,37 +82,50 @@
                                 &nbsp
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th"> ${student.firstName}</span>
+                                <span> ${student.firstName}</span>
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th">${student.lastName}</span>
+                                <span>${student.lastName}</span>
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th">${student.email}</span>
+                                <span>${student.email}</span>
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th">${student.address}</span>
+                                <span>${student.address}</span>
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th">${student.userName}</span>
+                                <span>${student.userName}</span>
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th">${student.college}</span>
+                                <span>${student.college}</span>
+                            </td>
+<%--                            <td>--%>
+<%--                                <span class="glyphicon glyphicon-th">${student.balance}</span>--%>
+<%--                            </td>--%>
+                            <td>
+                                <input name="check" type="checkbox" value="${student.id}">
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-th">${student.balance}</span>
+                                <a href="${contextPath}/manager/editStudent/${student.id}" class="btn btn-warning">Edit</a>
                             </td>
-                            <td>
-                                <a href="${contextPath}/manager/editStudent/${student.id}" class="btn-warning">Edit</a>
-                            </td>
-                            <td>
-                                <a href="${contextPath}/manager/deleteStudent/${student.id}" class="btn-danger">Delete</a>
-                            </td>
+
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
+            </form>
+
+            <p class="paging" align="center">
+                &nbsp
+                <a href="${contextPath}/manager/student/?page=${paging.indexpage - 1}&action=view">First</a>
+                <a href="${contextPath}/manager/student/?page=${paging.pageNow - 1}&action=view">Previous</a>
+                <strong>${paging.pageNow + 1}page/${paging.totalPageNum} Total</strong>
+                <a href="${contextPath}/manager/student/?page=${paging.pageNow + 1}&action=view">Next Page</a>
+                <a href="${contextPath}/manager/student/?page=${paging.totalPageNum - 1}&action=view">End</a>
+            </p>
         </div>
     </div>
+<script src="${contextPath}/js/util/page.js">
+</script>
 </body>
 </html>

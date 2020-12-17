@@ -2,6 +2,8 @@ package com.luv2code.controller;
 
 import com.luv2code.Entity.*;
 import com.luv2code.service.*;
+import com.luv2code.util.Paging;
+import com.luv2code.util.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/manager")
@@ -27,6 +30,42 @@ public class ManagerController {
     private OrderDetailService orderDetailService;
     @Autowired
     private ShopCartService shopCartService;
+    @Autowired
+    private PagingUtil pagingUtil;
+    @GetMapping("/login")
+    public String showLogin(HttpServletRequest request){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+        Student student = (Student) session.getAttribute("student");
+        if(manager == null && student != null){
+            return "customer-home";
+        }
+        return "manager-login";
+    }
+    @PostMapping("/loginForm")
+    public String login(HttpServletRequest request,Model model){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+        if(manager != null){
+            return "redirect:/manager/home";
+        }
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Manager manager1 = managerService.getManager(username,password);
+        if(manager1 == null){
+            model.addAttribute("message","Invalid Username or Password");
+            return "manager-login";
+        }
+        session.setAttribute("manager",manager1);
+        return "redirect:/manager/home";
+    }
     @GetMapping("/home")
     public String home(HttpServletRequest request){
         if(request.getAttribute("unsafe_request") == "true") {
@@ -34,8 +73,11 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+         if(session.getAttribute("student")!=null){
+             session.removeAttribute("student");
+         }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
         return "manager-home";
     }
@@ -46,13 +88,23 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
-        if(manager == null){
-            return "redirect:/user/show";
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
         }
         String action = request.getParameter("action");
         if(action.equals("view")){
-            List<Student> studentList = studentService.getStudents();
-            model.addAttribute("studentList",studentList);
+            List studentList = studentService.getStudents();
+            Map<String,Object> map = pagingUtil.createPage(studentList,request.getParameter("page"));
+//            request.setAttribute("");
+            model.addAttribute("paging",map.get("paging"));
+            Paging page = (Paging) map.get("paging");
+//            System.out.println("total pa");
+            System.out.println("total page "+page.getTotalPageNum());
+            System.out.println("end page "+page.getEndpage());
+            System.out.println("paging "+map.get("paging"));
+            List<Student> pageList = (List<Student>) map.get("list");
+            System.out.println("list "+pageList);
+            model.addAttribute("studentList",pageList);
             return "student-list";
         }else if(action.equals("create")){
             Student student = new Student();
@@ -62,25 +114,51 @@ public class ManagerController {
         }
         return "manager-home";
     }
-    @GetMapping("/deleteStudent/{id}")
-    public String deleteStudent(@PathVariable("id") int id, HttpServletRequest request){
+//    @GetMapping("/deleteStudent/{id}")
+//    public String deleteStudent(@PathVariable("id") int id, HttpServletRequest request){
+//        if(request.getAttribute("unsafe_request") == "true") {
+//            return "error";
+//        }
+//        HttpSession session = request.getSession();
+//        Manager manager = (Manager) session.getAttribute("manager");
+//        if(manager == null){
+//            return "redirect:/user/show";
+//        }
+//        List<Order> orders = orderService.getOrders(id);
+//        for(Order order:orders){
+//            orderDetailService.deleteOrderDetailByOrder(order.getId());
+//        }
+//        orderService.deleteOrderByStudent(id);
+////        shopCartService.deleteShopCart();
+//        shopCartService.clearShopCart(id);
+//        studentService.deleteStudent(id);
+//        return "Success";
+//    }
+    @PostMapping("/deleteStudent")
+    public String deleteStudent(HttpServletRequest request){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
-        List<Order> orders = orderService.getOrders(id);
-        for(Order order:orders){
-            orderDetailService.deleteOrderDetailByOrder(order.getId());
+        String[] ids = request.getParameterValues("check");
+        for(int i = 0 ; i < ids.length; i++){
+            int theId = Integer.parseInt(ids[i]);
+            List<Order> orders = orderService.getOrders(theId);
+            for(Order order:orders){
+                orderDetailService.deleteOrderDetailByOrder(order.getId());
+            }
+            orderService.deleteOrderByStudent(theId);
+            shopCartService.clearShopCart(theId);
+            studentService.deleteStudent(theId);
         }
-        orderService.deleteOrderByStudent(id);
-//        shopCartService.deleteShopCart();
-        shopCartService.clearShopCart(id);
-        studentService.deleteStudent(id);
-        return "Success";
+        return "redirect:/manager/home";
     }
     @GetMapping("/editStudent/{id}")
     public String editStudent(@PathVariable("id") int id, HttpServletRequest request,Model model){
@@ -89,8 +167,8 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
-        if(manager == null){
-            return "redirect:/user/show";
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
         }
         Student student = studentService.getStudent(id);
         model.addAttribute("student",student);
@@ -103,8 +181,11 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
         Student student = studentService.getStudent(id);
         student.setFirstName(request.getParameter("firstname"));
@@ -113,8 +194,8 @@ public class ManagerController {
         student.setEmail(request.getParameter("email"));
         student.setAddress(request.getParameter("address"));
         student.setCollege(request.getParameter("college"));
-        student.setBalance(Double.parseDouble(request.getParameter("balance")));
-        student.setUserName(request.getParameter("username"));
+//        student.setBalance(Double.parseDouble(request.getParameter("balance")));
+//        student.setUserName(request.getParameter("username"));
         student.setPassword(request.getParameter("password"));
         studentService.updateStudent(student);
         return "Success";
@@ -138,26 +219,38 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
-        if(manager == null){
-            return "redirect:/user/show";
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
         }
-        List<Item> list = itemService.getItems();
-        model.addAttribute("itemList",list);
+        if(manager == null){
+            return "redirect:/manager/login";
+        }
+        List itemList = itemService.getItems();
+        Map<String,Object> map = pagingUtil.createPage(itemList,request.getParameter("page"));
+//            request.setAttribute("");
+        List<Item> pageList = (List<Item>) map.get("list");
+        System.out.println("item list "+pageList);
+        model.addAttribute("paging",map.get("paging"));
+        model.addAttribute("itemList",pageList);
         return "item-list";
     }
-    @GetMapping("/deleteItem/{id}")
-    public String editItem(@PathVariable("id") int id, HttpServletRequest request){
+    @PostMapping("/deleteItem")
+    public String deleteItem( HttpServletRequest request){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
 //        OrderDetail orderDetail = orderDetailService.get
-        orderDetailService.deleteOrderDetailByItem(id);
-        itemService.deleteItem(id);
+        String[] ids = request.getParameterValues("check");
+//        orderDetailService.deleteOrderDetailByItem(id);
+//        itemService.deleteItem(id);
         return "Success";
     }
     @GetMapping("/orders")
@@ -167,8 +260,11 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
         List<Order> orders = orderService.getOrders();
         model.addAttribute("orders",orders);
@@ -181,12 +277,15 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
         List<OrderDetail> orderDetails = orderDetailService.getOrderDetails(id);
         model.addAttribute("orderDetails",orderDetails);
-        return "order-detail";
+        return "manage-order-detail";
     }
     @GetMapping("/deleteOrder/{id}")
     public String deleteOrder(@PathVariable("id") int id, HttpServletRequest request){
@@ -195,8 +294,11 @@ public class ManagerController {
         }
         HttpSession session = request.getSession();
         Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
         if(manager == null){
-            return "redirect:/user/show";
+            return "redirect:/manager/login";
         }
 //        orderDetailService.de
         orderDetailService.deleteOrderDetailByOrder(id);

@@ -93,7 +93,7 @@
                             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="basic">
-                                        <form class="form-horizontal" role="form" action="${contextPath}/user/updateStudent" method="post">
+                                        <form class="form-horizontal" role="form" action="${contextPath}/user/updateStudent" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="inputfullname" class="col-lg-2 control-label">First Name</label>
                                                 <div class="col-lg-10">
@@ -189,51 +189,6 @@
 
 
 
-
-<%--                    <div class="tab-pane active" id="basic2">--%>
-<%--                        <form class="form-horizontal" role="form" action="${contextPath}/item/uploadItem" method="post">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="inputname" class="col-lg-2 control-label">Name</label>--%>
-<%--                                <div class="col-lg-10">--%>
-<%--                                    <input type="text" class="form-control" id="inputname" placeholder="Name" name="name" >--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="inputprice" class="col-lg-2 control-label">Price</label>--%>
-<%--                                <div class="col-lg-10">--%>
-<%--                                    <input type="text" class="form-control" id="inputprice" placeholder="100.0" name="price"  >--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="inputdescription" class="col-lg-2 control-label">Description</label>--%>
-<%--                                <div class="col-lg-10">--%>
-<%--                                    <input type="text" class="form-control" id="inputdescription" placeholder="This is an item" name="description">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="inputtag" class="col-lg-2 control-label">Tag</label>--%>
-<%--                                <div class="col-lg-10">--%>
-<%--                                    <input type="text" class="form-control" id="inputtag" placeholder="book" name="tag" >--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-
-<%--                            <div class="form-group">--%>
-<%--                                <label  class="col-lg-2 control-label">Photo</label>--%>
-<%--                                <div class="col-lg-10">--%>
-<%--                                    <input type="file" class="filestyle" data-classbutton="btn btn-default btn-lg" data-input="false" id="filestyle-1" tabindex="-1" style="position: fixed; left: -500px;" name="pic"><div class="bootstrap-filestyle input-group">--%>
-<%--                                    <input type="text" class="form-control " disabled="" placeholder="Choose file">--%>
-<%--                                    <span class="input-group-btn" tabindex="0">--%>
-<%--                                                        <label for="filestyle-1" class="btn btn-default btn-lg">--%>
-<%--                                                            <span class="glyphicon glyphicon-folder-open"></span>--%>
-<%--                                                        </label>--%>
-<%--                                                    </span>--%>
-<%--                                </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <input type="submit" value="submit" class="btn btn-default btn-lg">--%>
-<%--                        </form>--%>
-<%--                    </div>--%>
                 </div>
             </div>
         </div>

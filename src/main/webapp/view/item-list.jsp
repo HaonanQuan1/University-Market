@@ -41,7 +41,8 @@
 <body>
 <div class="table table-striped table-hover col-md-10 col-sm-10">
     <div class="row">
-        <table>
+        <form action="${contextPath}/manager/deleteItem" method="post">
+        <table class="table table-hover table-striped">
             <thead>
             <tr>
                 <td>
@@ -57,7 +58,14 @@
                     Description:
                 </td>
                 <td>
-                    Owner:
+                    Tag:
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td><input type="checkbox" id="top_cb" /></td>
+                <td>
+                    <input class="btn  btn-danger" type="submit" value="Delete">
                 </td>
             </tr>
             </thead>
@@ -68,31 +76,38 @@
                         &nbsp
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-th">${item.name}</span>
+                        <span>${item.name}</span>
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-th">${item.price}</span>
+                        <span>${item.price}</span>
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-th">${item.description}</span>
+                        <span>${item.description}</span>
                     </td>
                     <td>
-                        <a href="${contextPath}/manager/editStudent/${item.student.id}">
-                            <span class="glyphicon glyphicon-th">${item.student.firstName}${item.student.lastName}</span>
-                        </a>
+                        <span>${item.tag}</span>
                     </td>
                     <td>
-<%--                    <td>--%>
-<%--                        <a href="${contextPath}/manager/editItem/${item.id}" class="btn-warning">Edit</a>--%>
-<%--                    </td>--%>
                     <td>
-                        <a href="${contextPath}/manager/deleteItem/${item.id}" class="btn-danger">Delete</a>
+                        <input name="check" type="checkbox" value="${item.id}">
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        </form>
+        <p class="paging" align="center">
+            &nbsp
+            <a href="${contextPath}/manager/student/?page=${paging.indexpage - 1}">First</a>
+            <a href="${contextPath}/manager/student/?page=${paging.pageNow - 1}">Previous</a>
+            <strong>${paging.pageNow + 1}page/${paging.totalPageNum} Total</strong>
+            <a href="${contextPath}/manager/student/?page=${paging.pageNow + 1}">Next Page</a>
+            <a href="${contextPath}/manager/student/?page=${paging.totalPageNum - 1}">End</a>
+        </p>
     </div>
 </div>
+<script src="${contextPath}/js/util/page.js">
+
+</script>
 </body>
 </html>

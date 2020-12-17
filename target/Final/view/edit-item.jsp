@@ -49,7 +49,8 @@
         <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
             <div class="tab-content">
                 <div class="tab-pane active" id="basic2">
-                    <form class="form-horizontal" role="form" action="${contextPath}/item/editItem" method="post">
+                    <form class="form-horizontal" role="form" action="${contextPath}/item/editItem" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="${item.id}">
                         <div class="form-group">
                             <label for="inputname" class="col-lg-2 control-label">Name</label>
                             <div class="col-lg-10">

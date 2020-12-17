@@ -25,6 +25,7 @@ com/luv2code/interceptor/Xssinterceptor.class
 com/luv2code/DAO/impl/OrderDetailDAOImpl.class
 com/luv2code/service/impl/ShopCartServiceImpl.class
 com/luv2code/Entity/OrderDetail.class
+com/luv2code/util/Paging.class
 com/luv2code/DAO/impl/ManagerDAOImpl.class
 com/luv2code/service/OrderService.class
 com/luv2code/Entity/Order.class
@@ -33,6 +34,7 @@ com/luv2code/DAO/OrderDAO.class
 com/luv2code/Entity/MyItem.class
 com/luv2code/service/ItemService.class
 com/luv2code/Test.class
+com/luv2code/util/PagingUtil.class
 com/luv2code/Entity/Manager.class
 com/luv2code/DAO/impl/ShopCartDAOImpl.class
 com/luv2code/controller/ManagerController.class

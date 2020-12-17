@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+//import java.util.HashMap;
 import java.util.List;
+//import java.util.Map;
 
 @Controller
 
@@ -100,6 +102,48 @@ public class AjaxController {
         System.out.println("end iterate");
         return res;
     }
+    @PostMapping("/updateShopCartNum")
+    @ResponseBody
+    public String updateShopCartNum(HttpServletRequest request){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        System.out.println("Enter Ajax updateShopCartNum");
+//        int id = Integer.parseInt(request.getParameter("id"));
+//        System.out.println("id "+id);
+        int num = Integer.parseInt(request.getParameter("num"));
+        System.out.println("num "+num);
+//        Item item = itemService.getItem(id);
+        String res = String.valueOf(num);
+//        if(item.getNum() < num){
+//            res = String.valueOf(item.getNum());
+//        }
+        System.out.println("res "+res);
+        return res;
+    }
+//
+//    @PostMapping("/updateShopCartNum")
+//    @ResponseBody
+//    public Map<String,Object> updateShopCartNum(String id, String num, HttpServletRequest request){
+//        Map<String,Object> resultMap = new HashMap<String,Object>();
+//        if(request.getAttribute("unsafe_request") == "true") {
+//            resultMap.put("error","error");
+//            return resultMap;
+//        }
+//
+////        int num = request.getParameter("num");
+////        String id = request.getParameter("id");
+//        int qty = Integer.parseInt(num);
+//        int theId = Integer.parseInt(id);
+//        Item item = itemService.getItem(theId);
+//        if(qty > item.getNum()){
+//            qty = item.getNum();
+//            resultMap.put("result","We only have "+qty+"in total");
+//        }
+//        resultMap.put("qty",qty);
+////        resultMap
+//        return resultMap;
+//    }
 
 //    @PostMapping("/checkManagerQualify")
 //    @ResponseBody
