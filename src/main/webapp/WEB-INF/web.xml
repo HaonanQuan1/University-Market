@@ -24,6 +24,13 @@
     <session-config>
         <session-timeout>120</session-timeout>
     </session-config>
+    <error-page>
+
+        <error-code>404</error-code>
+
+        <location>/view/404.jsp</location>
+
+    </error-page>
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>default</servlet-name>-->
 <!--        <url-pattern>*.jpg</url-pattern>-->
