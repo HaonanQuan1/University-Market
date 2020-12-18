@@ -41,8 +41,38 @@ public class UserController {
 //    private
 //    @Autowired
 //    private
+    @GetMapping("")
+    public String show(HttpServletRequest request){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Student exist = (Student) session.getAttribute("student");
+        if(exist != null){
+            return "redirect:/student/home";
+        }
+//        HttpSession session = request.getSession();
+        Manager manager1 = (Manager) session.getAttribute("manager");
+        if(manager1 != null){
+            return "redirect:/manager/home";
+        }
+        return "user-login";
+    }
     @GetMapping("/show")
-    public String showLogin(){
+    public String showLogin(HttpServletRequest request){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Student exist = (Student) session.getAttribute("student");
+        if(exist != null){
+            return "redirect:/student/home";
+        }
+//        HttpSession session = request.getSession();
+        Manager manager1 = (Manager) session.getAttribute("manager");
+        if(manager1 != null){
+            return "redirect:/manager/home";
+        }
         return "user-login";
     }
 

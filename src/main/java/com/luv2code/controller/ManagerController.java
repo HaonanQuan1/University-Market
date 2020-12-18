@@ -159,7 +159,7 @@ public class ManagerController {
             shopCartService.clearShopCart(theId);
             studentService.deleteStudent(theId);
         }
-        return "success";
+        return "Success";
     }
     @GetMapping("/editStudent/{id}")
     public String editStudent(@PathVariable("id") int id, HttpServletRequest request,Model model){

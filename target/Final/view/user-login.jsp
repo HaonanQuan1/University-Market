@@ -56,15 +56,18 @@
                     <span class="focus-input100"></span>
                 </div>
 
-                <div class="text-right p-t-13 p-b-23">
-						<span class="txt1">
-							Forgot
-						</span>
+<%--                <div class="text-right p-t-13 p-b-23">--%>
+<%--						<span class="txt1">--%>
+<%--							Forgot--%>
+<%--						</span>--%>
 
-                    <a href="#" class="txt2">
-                        Username / Password?
-                    </a>
-                </div>
+<%--                    <a href="#" class="txt2">--%>
+<%--                        Username / Password?--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+                <br>
+                <br>
+
                 <c:if test="${message!=null}">
                     <span style="color: red">${message}</span>
                 </c:if>

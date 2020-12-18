@@ -129,16 +129,18 @@
                     <span class="focus-input100"></span>
                 </div>
 
-                <div class="text-right p-t-13 p-b-23">
-						<span class="txt1">
-							Forgot
-						</span>
+<%--                <div class="text-right p-t-13 p-b-23">x--%>
+<%--						<span class="txt1">--%>
+<%--							Forgot--%>
+<%--						</span>--%>
 
-                    <a href="#" class="txt2">
-                        Username / Password?
-                    </a>
+<%--                    <a href="#" class="txt2">--%>
+<%--                        Username / Password?--%>
+<%--                    </a>--%>
 
-                </div>
+<%--                </div>--%>
+                <br>
+                <br>
                 <div class="container-login100-form-btn">
                     <input class="login100-form-btn" type="submit"  value="Sign Up" id="signup">
                     <%--                        Sign in--%>
