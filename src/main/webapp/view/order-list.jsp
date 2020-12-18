@@ -36,12 +36,13 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Student List</title>
+    <title>Order List</title>
 </head>
 <body>
 <div class="table table-striped table-hover col-md-10 col-sm-10">
     <div class="row">
-        <table>
+        <form action="${contextPath}/manager/deleteOrder" method="post">
+        <table class="table table-striped table-hover">
             <thead>
             <tr>
                 <td>
@@ -56,6 +57,13 @@
                 <td>
                     Student:
                 </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td><input type="checkbox" id="top_cb" /></td>
+                <td>
+                    <input class="btn  btn-danger" type="submit" value="Delete">
+                </td>
             </tr>
             </thead>
             <tbody>
@@ -65,28 +73,41 @@
                         &nbsp
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-th">${item.date}</span>
+                        <span>${item.date}</span>
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-th">${item.totalPrice}</span>
+                        <span>${item.totalPrice}</span>
                     </td>
                     <td>
                         <a href="${contextPath}/manager/editStudent/${item.student.id}">
-                            <span class="glyphicon glyphicon-th">${item.student.firstName}${item.student.lastName}</span>
+                            <span>${item.student.firstName}${item.student.lastName}</span>
                         </a>
                     </td>
                     <td>
                     <td>
-                        <a href="${contextPath}/manager/orderDetail/${item.id}" class="btn-warning">View Order Detail</a>
+                        <input name="check" type="checkbox" value="${item.id}">
                     </td>
                     <td>
-                        <a href="${contextPath}/manager/deleteOrder/${item.id}" class="btn-danger">Delete</a>
+                        <a href="${contextPath}/manager/orderDetail/${item.id}" class="btn btn-warning">View Order Detail</a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        </form>
+        <p class="paging" align="center">
+            &nbsp
+            <a href="${contextPath}/manager/orders/?page=${paging.indexpage - 1}">First</a>
+            <a href="${contextPath}/manager/orders/?page=${paging.pageNow - 1}">Previous</a>
+            <strong>${paging.pageNow + 1}page/${paging.totalPageNum} Total</strong>
+            <a href="${contextPath}/manager/orders/?page=${paging.pageNow + 1}">Next Page</a>
+            <a href="${contextPath}/manager/orders/?page=${paging.totalPageNum - 1}">End</a>
+        </p>
     </div>
+
 </div>
+
+<script src="${contextPath}/js/util/page.js"></script>
+
 </body>
 </html>

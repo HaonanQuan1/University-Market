@@ -59,7 +59,7 @@
         <c:forEach var="item" items="${searchResult}">
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
                 <figure class="effect-ming tm-video-item">
-                    <img src="${contextPath}/img/item/${item.pic}" alt="Image" class="img-fluid">
+                    <img src="${contextPath}/img/item/${item.pic}" alt="Image" class="img-fluid" style="width: 420px; height: 200px;object-fit: cover">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>${item.name}</h2>
                         <a href="${contextPath}/item/detail/${item.id}">View more</a>
@@ -71,7 +71,14 @@
                 </div>
             </div>
         </c:forEach>
-
+        <p class="paging" align="center">
+            &nbsp
+            <a href="${contextPath}/student/home/?page=${paging.indexpage - 1}" class="btn btn-primary tm-btn-prev mb-2">First</a>
+            <a href="${contextPath}/student/home/?page=${paging.pageNow - 1}" class="btn btn-primary tm-btn-prev mb-2">Previous</a>
+            <strong>${paging.pageNow + 1}&nbsp;page/${paging.totalPageNum} Total</strong>
+            <a href="${contextPath}/student/home/?page=${paging.pageNow + 1}" class="btn btn-primary tm-btn-prev mb-2">Next Page</a>
+            <a href="${contextPath}/student/home/?page=${paging.totalPageNum - 1}" class="btn btn-primary tm-btn-prev mb-2">End</a>
+        </p>
     </div>
     <%@include file="footer.jsp"%>
     <script src="${contextPath}/js/plugins.js"></script>

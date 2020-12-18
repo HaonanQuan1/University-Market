@@ -39,7 +39,7 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="well">
                         <form id="loginForm" method="POST" action="${contextPath}/manager/loginForm" novalidate="novalidate">
                             <div class="form-group">
@@ -70,17 +70,17 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-xs-6">
-                    <p class="lead">Register now for <span class="text-success">FREE</span></p>
-                    <ul class="list-unstyled" style="line-height: 2">
-                        <li><span class="fa fa-check text-success"></span> Sell Your Own Used stuffs</li>
-                        <li><span class="fa fa-check text-success"></span> Purchase Used products Like Books</li>
-                        <li><span class="fa fa-check text-success"></span> Save Your Money</li>
-                        <li><span class="fa fa-check text-success"></span> Deal With Your Classmates</li>
-<%--                        <li><span class="fa fa-check text-success"></span> Search medical records</li>--%>
-                    </ul>
-                    <p><a href="${contextPath}/user/showRegisterForm" class="btn btn-info btn-block">Yes please, register now!</a></p>
-                </div>
+<%--                <div class="col-xs-6">--%>
+<%--                    <p class="lead">Register now for <span class="text-success">FREE</span></p>--%>
+<%--                    <ul class="list-unstyled" style="line-height: 2">--%>
+<%--                        <li><span class="fa fa-check text-success"></span> Sell Your Own Used stuffs</li>--%>
+<%--                        <li><span class="fa fa-check text-success"></span> Purchase Used products Like Books</li>--%>
+<%--                        <li><span class="fa fa-check text-success"></span> Save Your Money</li>--%>
+<%--                        <li><span class="fa fa-check text-success"></span> Deal With Your Classmates</li>--%>
+<%--&lt;%&ndash;                        <li><span class="fa fa-check text-success"></span> Search medical records</li>&ndash;%&gt;--%>
+<%--                    </ul>--%>
+<%--                    <p><a href="${contextPath}/user/showRegisterForm" class="btn btn-info btn-block">Yes please, register now!</a></p>--%>
+<%--                </div>--%>
             </div>
         </div>
     </div>

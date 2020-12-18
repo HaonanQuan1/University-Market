@@ -37,7 +37,7 @@
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <div class="container">
-    <a href="${contextPath}/user/logout" class="btn-info">
+    <a href="${contextPath}/user/logout" class=" btn btn-info">
         Log Out
     </a>
     <div class="row">
@@ -61,11 +61,11 @@
                                                     target="frame"> Student List</a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td></span><a
-                                                    href="${contextPath}/manager/student?action=create"
-                                                    target="frame"> Create Student Account</a></td>
-                                        </tr>
+<%--                                        <tr>--%>
+<%--                                            <td></span><a--%>
+<%--                                                    href="${contextPath}/manager/student?action=create"--%>
+<%--                                                    target="frame"> Create Student Account</a></td>--%>
+<%--                                        </tr>--%>
                                     </table>
                                 </div>
                             </div>
@@ -95,60 +95,27 @@
                                 </div>
                             </div>
                         </div>
-<%--                        <div class="panel panel-default">--%>
-<%--                            <div class="panel-heading">--%>
-<%--                                <h4 class="panel-title">--%>
-<%--                                    <a data-toggle="collapse" data-parent="#accordion"--%>
-<%--                                       href="#collapseThree" target="frame"><span--%>
-<%--                                            class="glyphicon glyphicon-user"> </span> Managers</a>--%>
-<%--                                </h4>--%>
-<%--                            </div>--%>
-<%--                            <div id="collapseThree" class="panel-collapse collapse">--%>
-<%--                                <div class="panel-body">--%>
-<%--&lt;%&ndash;                                    <table class="table">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                            <td>&ndash;%&gt;--%>
-<%--                                                <a--%>
-<%--                                                    href="${contextPath}/manager/managers?action=view"--%>
-<%--                                                    target="frame"> View All Managers</a>--%>
-<%--&lt;%&ndash;                                            </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        <c:forEach items="${requestScope.patientList}" var="patient">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                            <tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                <td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                    <a&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                        href="${contextPath}/manager/?action=create"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                        target="frame">Create A Manager Account</a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                </td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                            </tr>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        </c:forEach>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    </table>&ndash;%&gt;--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="panel panel-default">--%>
-<%--                            <div class="panel-heading">--%>
-<%--                                <h4 class="panel-title">--%>
-<%--                                    <a data-toggle="collapse" data-parent="#accordion"--%>
-<%--                                       href="#collapseFour" target="frame"><span--%>
-<%--                                            class="glyphicon glyphicon-file"> </span> Account</a>--%>
-<%--                                </h4>--%>
-<%--                            </div>--%>
-<%--                            <div id="collapseFour" class="panel-collapse collapse">--%>
-<%--                                <div class="panel-body">--%>
-<%--                                    <table class="table">--%>
-<%--                                        &lt;%&ndash; <c:forEach items="${}"--%>
-<%--                                            var="patient">--%>
-<%--                                            <tr>--%>
-<%--                                                <td><a--%>
-<%--                                                    href="${contextPath}/patient/prescription.htm?prescriptionid=${}"--%>
-<%--                                                    target="frame"> ${}</a></td>--%>
-<%--                                            </tr>--%>
-<%--                                        </c:forEach> &ndash;%&gt;--%>
-<%--                                    </table>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseThree" target="frame"><span
+                                            class=""> </span>Profile</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td><a
+                                                    href="${contextPath}/manager/profile"
+                                                    target="frame">Edit Password</a> </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -125,7 +125,7 @@
 
 
                 <div class="wrap-input100 validate-input" data-validate = "Please enter password">
-                    <input class="input100" type="password" name="password" placeholder="The Length Must be at least 6">
+                    <input class="input100" type="password" name="password" placeholder="The Length Must be at least 6" pattern=".{5,12}" required title="5 to 12 chatacters">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -194,61 +194,3 @@
 </script>
 </body>
 </html>
-<%--<body>--%>
-<%--<c:set var="contextPath" value="${pageContext.request.contextPath}" />--%>
-<%--<c:set var="mes" value="${mes}"/>--%>
-<%--<div id="login-overlay" class="modal-dialog" style="width:30%">--%>
-<%--    <div class="modal-content">--%>
-<%--        <div class="modal-header">--%>
-<%--            <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button> -->--%>
-<%--            <h4 class="modal-title" id="myModalLabel">Register to site.com</h4>--%>
-<%--        </div>--%>
-<%--        <div class="modal-body">--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-xs-12">--%>
-<%--                    <div class="well">--%>
-<%--                        <form id="registerForm" method="POST" action="${contextPath}/user/register" novalidate="novalidate">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="username" class="control-label">Username</label>--%>
-<%--                                <input type="text" class="form-control" id="username" name="username" value="" required="required" title="Please enter you username" placeholder="Example : Jack" onkeyup="ajaxEvent()">--%>
-<%--                                <div id="usernameHint"></div>--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="email" class="control-label">Email</label>--%>
-<%--                                <input type="email" class="form-control" id="email" name="email" value="" required="required" title="Please enter you email" placeholder="example@gmail.com" onkeyup="emailEvent()">--%>
-<%--                                <div id="emailHint"></div>--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="password" class="control-label">Password</label>--%>
-<%--                                <input type="password" class="form-control" id="password" name="password" value="" required="required" title="Please enter your password">--%>
-<%--                            </div>--%>
-<%--                            <!-- <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>  -->--%>
-<%--&lt;%&ndash;                            <div class="form-group">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <label for="role" class="control-label">Role</label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <input type="radio" class="checkbox-inline" name="role" value="Student"> Student&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <input type="radio" class="checkbox-inline" name="role" value="Manager"> Manager&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                                <div id="roleHint" style="color: red">&ndash;%&gt;--%>
-<%--&lt;%&ndash;&lt;%&ndash;                                    <c:if test="${mes != null}">&ndash;%&gt;&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                        ${mes}&ndash;%&gt;--%>
-<%--&lt;%&ndash;&lt;%&ndash;                                    </c:if>&ndash;%&gt;&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                                </div>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </div>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <div class="form-group">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                <label for="captchaCode" class="control-label">Retype the characters from the picture:</label>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;                                <input id="captchaCode" type="text" class="form-control" name="captchaCode" required="required" />&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            </div>&ndash;%&gt;--%>
-
-<%--                            <button type="submit" class="btn btn-info btn-block">Register</button>--%>
-<%--                        </form>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--</body>--%>
-<%--</html>--%>

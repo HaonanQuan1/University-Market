@@ -16,6 +16,6 @@
 <%--Email has been sent to your inbox , please click on the link to activate your account !--%>
  Congratulation! You Have Created You Account!
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<a href="${contextPath}/user/show">Click her to login</a>
+<a href="${contextPath}/user/show">Click here to login</a>
 </body>
 </html>

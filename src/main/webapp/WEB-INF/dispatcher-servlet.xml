@@ -19,12 +19,30 @@
     </bean>
 <!--    <mvc:resources mapping="/resource/img/**" location="/img"/>-->
     <mvc:resources mapping="/**" location="/resource/"/>
+<!--    <mvc:interceptors>-->
+<!--        &lt;!&ndash;        <mvc:interceptor>&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;            <mvc:mapping path=""/>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;            <bean class="com.luv2code.part5.interceptor.Xssinterceptor"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </mvc:interceptor>&ndash;&gt;-->
+<!--    </mvc:interceptors>-->
     <mvc:interceptors>
-        <bean class="com.luv2code.interceptor.Xssinterceptor"/>
-        <!--        <mvc:interceptor>-->
-        <!--&lt;!&ndash;            <mvc:mapping path=""/>&ndash;&gt;-->
-        <!--            <bean class="com.luv2code.part5.interceptor.Xssinterceptor"/>-->
-        <!--        </mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/student/**"/>
+            <bean class="com.luv2code.interceptor.StudentInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.luv2code.interceptor.Xssinterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/manager/"/>
+            <bean class="com.luv2code.interceptor.ManagerInterceptor"/>
+        </mvc:interceptor>
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/user/login"/>-->
+<!--&lt;!&ndash;            <mvc:exclude-mapping path="/user/register"/>&ndash;&gt;-->
+<!--            <bean class="com.luv2code.interceptor.RememberInterceptor"/>-->
+<!--        </mvc:interceptor>-->
     </mvc:interceptors>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

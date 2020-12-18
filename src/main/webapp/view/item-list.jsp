@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Student List</title>
+    <title>Item List</title>
 </head>
 <body>
 <div class="table table-striped table-hover col-md-10 col-sm-10">
@@ -98,11 +98,11 @@
         </form>
         <p class="paging" align="center">
             &nbsp
-            <a href="${contextPath}/manager/student/?page=${paging.indexpage - 1}">First</a>
-            <a href="${contextPath}/manager/student/?page=${paging.pageNow - 1}">Previous</a>
+            <a href="${contextPath}/manager/items/?page=${paging.indexpage - 1}">First</a>
+            <a href="${contextPath}/manager/items/?page=${paging.pageNow - 1}">Previous</a>
             <strong>${paging.pageNow + 1}page/${paging.totalPageNum} Total</strong>
-            <a href="${contextPath}/manager/student/?page=${paging.pageNow + 1}">Next Page</a>
-            <a href="${contextPath}/manager/student/?page=${paging.totalPageNum - 1}">End</a>
+            <a href="${contextPath}/manager/items/?page=${paging.pageNow + 1}">Next Page</a>
+            <a href="${contextPath}/manager/items/?page=${paging.totalPageNum - 1}">End</a>
         </p>
     </div>
 </div>

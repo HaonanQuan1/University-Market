@@ -19,13 +19,6 @@
     <link rel="stylesheet" href="${contextPath}/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="${contextPath}/css/all.min.css">
     <link rel="stylesheet" href="${contextPath}/css/templatemo-style.css">
-    <!--
-
-    TemplateMo 556 Catalog-Z
-
-    https://templatemo.com/tm-556-catalog-z
-
-    -->
 </head>
 <body>
 <!-- Page Loader -->
@@ -44,11 +37,11 @@
         <h2 class="col-6 tm-text-primary">
             Latest Items
         </h2>
-        <div class="col-6 d-flex justify-content-end align-items-center">
-            <form action="" class="tm-text-primary">
-                Page <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary"> of 180
-            </form>
-        </div>
+<%--        <div class="col-6 d-flex justify-content-end align-items-center">--%>
+<%--            <form action="" class="tm-text-primary">--%>
+<%--                Page <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary"> of 180--%>
+<%--            </form>--%>
+<%--        </div>--%>
     </div>
     <div class="row tm-mb-90 tm-gallery">
     <c:forEach var="item" items="${list}">
@@ -72,18 +65,27 @@
 
 
 </div> <!-- row -->
-    <div class="row tm-mb-90">
-        <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
-            <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
-            <div class="tm-paging d-flex">
-                <a href="javascript:void(0);" class="active tm-paging-link">1</a>
-                <a href="javascript:void(0);" class="tm-paging-link">2</a>
-                <a href="javascript:void(0);" class="tm-paging-link">3</a>
-                <a href="javascript:void(0);" class="tm-paging-link">4</a>
-            </div>
-            <a href="javascript:void(0);" class="btn btn-primary tm-btn-next">Next Page</a>
-        </div>
-    </div>
+<%--    <div class="row tm-mb-90">--%>
+<%--        <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">--%>
+<%--&lt;%&ndash;            <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <div class="tm-paging d-flex">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="javascript:void(0);" class="active tm-paging-link">1</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="javascript:void(0);" class="tm-paging-link">2</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="javascript:void(0);" class="tm-paging-link">3</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <a href="javascript:void(0);" class="tm-paging-link">4</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <a href="javascript:void(0);" class="btn btn-primary tm-btn-next">Next Page</a>&ndash;%&gt;--%>
+
+<%--        </div>--%>
+<%--    </div>--%>
+<p class="paging" align="center">
+    &nbsp
+    <a href="${contextPath}/student/home/?page=${paging.indexpage - 1}" class="btn btn-primary tm-btn-prev mb-2">First</a>
+    <a href="${contextPath}/student/home/?page=${paging.pageNow - 1}" class="btn btn-primary tm-btn-prev mb-2">Previous</a>
+    <strong>${paging.pageNow + 1}page/${paging.totalPageNum} Total</strong>
+    <a href="${contextPath}/student/home/?page=${paging.pageNow + 1}" class="btn btn-primary tm-btn-prev mb-2">Next Page</a>
+    <a href="${contextPath}/student/home/?page=${paging.totalPageNum - 1}" class="btn btn-primary tm-btn-prev mb-2">End</a>
+</p>
  <!-- container-fluid, tm-container-content -->
 
 

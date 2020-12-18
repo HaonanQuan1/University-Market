@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.ManyToOne;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -158,7 +159,7 @@ public class ManagerController {
             shopCartService.clearShopCart(theId);
             studentService.deleteStudent(theId);
         }
-        return "redirect:/manager/home";
+        return "success";
     }
     @GetMapping("/editStudent/{id}")
     public String editStudent(@PathVariable("id") int id, HttpServletRequest request,Model model){
@@ -200,17 +201,6 @@ public class ManagerController {
         studentService.updateStudent(student);
         return "Success";
     }
-//    @GetMapping("/viewStudent/{id}")
-//    public  String getStudent(@PathVariable("id") int id, HttpServletRequest request,Model model){
-//        HttpSession session = request.getSession();
-//        Manager manager = (Manager) session.getAttribute("manager");
-//        if(manager == null){
-//            return "redirect:/user/show";
-//        }
-//        Student student = studentService.getStudent(id);
-//        model.addAttribute("student",student);
-//        return "student-detail";
-//    }
 
     @GetMapping("/items")
     public String getItems(HttpServletRequest request,Model model){
@@ -227,7 +217,6 @@ public class ManagerController {
         }
         List itemList = itemService.getItems();
         Map<String,Object> map = pagingUtil.createPage(itemList,request.getParameter("page"));
-//            request.setAttribute("");
         List<Item> pageList = (List<Item>) map.get("list");
         System.out.println("item list "+pageList);
         model.addAttribute("paging",map.get("paging"));
@@ -249,6 +238,12 @@ public class ManagerController {
         }
 //        OrderDetail orderDetail = orderDetailService.get
         String[] ids = request.getParameterValues("check");
+//        List<Item> = itemService.getItem();
+        for(int i = 0 ;i < ids.length; i++){
+            int id = Integer.parseInt(ids[i]);
+            orderDetailService.deleteOrderDetailByItem(id);
+            itemService.deleteItem(id);
+        }
 //        orderDetailService.deleteOrderDetailByItem(id);
 //        itemService.deleteItem(id);
         return "Success";
@@ -266,8 +261,12 @@ public class ManagerController {
         if(manager == null){
             return "redirect:/manager/login";
         }
-        List<Order> orders = orderService.getOrders();
-        model.addAttribute("orders",orders);
+        List orders = orderService.getOrders();
+        Map<String,Object> map = pagingUtil.createPage(orders,request.getParameter("page"));
+        List<Order> orderList = (List<Order>)map.get("list");
+//        model.addAttribute("orders",orders);
+        model.addAttribute("paging",map.get("paging"));
+        model.addAttribute("orders",orderList);
         return "order-list";
     }
     @GetMapping("/orderDetail/{id}")
@@ -287,8 +286,8 @@ public class ManagerController {
         model.addAttribute("orderDetails",orderDetails);
         return "manage-order-detail";
     }
-    @GetMapping("/deleteOrder/{id}")
-    public String deleteOrder(@PathVariable("id") int id, HttpServletRequest request){
+    @PostMapping("/deleteOrder")
+    public String deleteOrder( HttpServletRequest request){
         if(request.getAttribute("unsafe_request") == "true") {
             return "error";
         }
@@ -301,8 +300,12 @@ public class ManagerController {
             return "redirect:/manager/login";
         }
 //        orderDetailService.de
-        orderDetailService.deleteOrderDetailByOrder(id);
-        orderService.deleteOrder(id);
+        String[] ids = request.getParameterValues("check");
+        for(int i = 0; i < ids.length; i++){
+            int id = Integer.parseInt(ids[i]);
+            orderDetailService.deleteOrderDetailByOrder(id);
+            orderService.deleteOrder(id);
+        }
         return "Success";
     }
 //    @GetMapping("/managers")
@@ -316,4 +319,43 @@ public class ManagerController {
 //        model.addAttribute("managers",managers);
 //        return "manager-list";
 //    }
+    @GetMapping("/profile")
+    public String getProfile(HttpServletRequest request,Model model){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
+        if(manager == null){
+            return "redirect:/manager/login";
+        }
+        return "manager-profile";
+    }
+    @PostMapping("/changePassword")
+    public String chagePassword(HttpServletRequest request,Model model){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Manager manager = (Manager) session.getAttribute("manager");
+        if(session.getAttribute("student")!=null){
+            session.removeAttribute("student");
+        }
+        if(manager == null){
+            return "redirect:/manager/login";
+        }
+        String old = request.getParameter("old");
+        String newP = request.getParameter("new");
+        if(!manager.getPassword().equals(old)){
+            model.addAttribute("mes","Wrong Password");
+            return "manager-profile";
+        }
+        manager.setPassword(newP);
+        managerService.updateManager(manager);
+        model.addAttribute("mes","change successful");
+        return "manager-profile";
+    }
 }

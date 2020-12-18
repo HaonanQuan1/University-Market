@@ -62,6 +62,7 @@
                     <div class="text-center mb-5">
                         <c:if test="${sessionScope.student.id != item.student.id}">
                             <a href="${contextPath}/student/addCart/${item.id}" class="btn btn-primary tm-btn-big" >Add to Cart</a>
+<%--                            <a href="${contextPath}/item/report/${item.id}" class="btn btn-primary tm-btn-big">Report</a>--%>
                         </c:if>
                     </div>
                 </form>

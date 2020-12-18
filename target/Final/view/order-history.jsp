@@ -15,6 +15,7 @@
 <html>
 <head>
     <link href="${contextPath}/css/shopcart/shopcart.css" type="text/css" rel="stylesheet">
+    <title>Order History</title>
 </head>
 <body>
 <%@include file="header.jsp"%>

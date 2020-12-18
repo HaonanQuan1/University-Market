@@ -25,7 +25,7 @@
 <body>
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand" href="${contextPath}/user/profile">
+        <a class="navbar-brand" href="${contextPath}/student/profile">
             <%--            <i class="fas fa-film mr-2"></i>--%>
             Hi&nbsp;${student.firstName}&nbsp;${student.lastName}
         </a>

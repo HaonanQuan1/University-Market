@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form class="needs-validation" novalidate="" action="${contextPath}/student/finishOrder/${order.id}" method="post">
+            <form class="needs-validation"  action="${contextPath}/student/finishOrder/${order.id}" method="post">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstName">First name</label>
@@ -91,27 +91,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="username">Username</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">@</span>
-                        </div>
-                        <input type="text" class="form-control" id="username" placeholder="Username" required="" name="username">
-                        <div class="invalid-feedback" style="width: 100%;">
-                            Your username is required.
-                        </div>
-                    </div>
-                </div>
-
-<%--                <div class="mb-3">--%>
-<%--                    <label for="email">Email <span class="text-muted">(Optional)</span></label>--%>
-<%--                    <input type="email" class="form-control" id="email" placeholder="you@example.com" name="phone">--%>
-<%--                    <div class="invalid-feedback">--%>
-<%--                        Please enter a valid email address for shipping updates.--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
-                <div class="mb-3">
                     <label for="address">Address</label>
                     <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" name="address1">
                     <div class="invalid-feedback">
@@ -119,15 +98,10 @@
                     </div>
                 </div>
 
-<%--                <div class="mb-3">--%>
-<%--                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>--%>
-<%--                    <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">--%>
-<%--                </div>--%>
-
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <label for="country">Country</label>
-                        <select class="custom-select d-block w-100" id="country" required="">
+                        <select class="custom-select d-block w-100" id="country" required="" style="height: 60px" name="country">
                             <option value="">Choose...</option>
                             <option>United States</option>
                         </select>
@@ -137,7 +111,7 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="state">State</label>
-                        <select class="custom-select d-block w-100" id="state" required="">
+                        <select class="custom-select d-block w-100" id="state" required="" style="height: 60px" name="state">
                             <option value="">Choose...</option>
                             <option>California</option>
                             <option>Washington</option>
@@ -149,7 +123,7 @@
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" placeholder="" required="">
+                        <input type="text" class="form-control" id="zip" placeholder="" required="" style="height: 60px" name="zip">
                         <div class="invalid-feedback">
                             Zip code required.
                         </div>
@@ -170,7 +144,7 @@
 
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" >
                         <label class="custom-control-label" for="credit">Credit card</label>
                     </div>
                     <div class="custom-control custom-radio">
@@ -185,7 +159,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="cc-name">Name on card</label>
-                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                        <input type="text" class="form-control" id="cc-name" placeholder="" required="" name="cardname">
                         <small class="text-muted">Full name as displayed on card</small>
                         <div class="invalid-feedback">
                             Name on card is required
@@ -193,7 +167,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="cc-number">Credit card number</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                        <input type="text" class="form-control" id="cc-number" placeholder="" required="" pattern=".{19,19}" maxlength="19" minlength="19" required title="Enter Valid Card Number" name="cardnum">
                         <div class="invalid-feedback">
                             Credit card number is required
                         </div>
@@ -202,14 +176,14 @@
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label for="cc-expiration">Expiration</label>
-                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="" name="carddate">
                         <div class="invalid-feedback">
                             Expiration date required
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="cc-cvv">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="" pattern=".{3,3}" maxlength="3" minlength="3" name="cardcvv">
                         <div class="invalid-feedback">
                             Security code required
                         </div>
@@ -259,121 +233,21 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"
 ></script>
+
     <script src="${contextPath}/js/checkout/script.js"></script>
-
+    <script type="text/javascript">
+        $("#cc-number").keyup(function(){
+            var op="";
+            var t=$("#cc-number").val().replace(/\D/g, "");
+            for (var i=0;i<t.length;i++){
+                if(i%4===0 && i>0) {
+                    op += " " + t.charAt(i);
+                }else {
+                    op += t.charAt(i);
+                }
+            }
+            $(this).val(op);
+        });
+    </script>
 </body>
-<%--<html>--%>
-<%--<head>--%>
-<%--    &lt;%&ndash;    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">&ndash;%&gt;--%>
-<%--    <script src="https://code.jquery.com/jquery-1.11.1.min.js"--%>
-<%--            integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE="--%>
-<%--            crossorigin="anonymous"></script>--%>
-<%--    <!-- Latest compiled and minified CSS -->--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"--%>
-<%--          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"--%>
-<%--          crossorigin="anonymous">--%>
-
-<%--    <!-- Optional theme -->--%>
-<%--    <link rel="stylesheet"--%>
-<%--          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"--%>
-<%--          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"--%>
-<%--          crossorigin="anonymous">--%>
-
-<%--    <!-- Latest compiled and minified JavaScript -->--%>
-<%--    <script--%>
-<%--            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"--%>
-<%--            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"--%>
-<%--            crossorigin="anonymous"></script>--%>
-<%--    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">--%>
-<%--    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>--%>
-<%--    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
-<%--    <title>Place Order</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--    <div class="container">--%>
-<%--        <%@include file="nav.jsp"%>--%>
-<%--        <div class="row">--%>
-<%--            <div class="col-md-9 col-sm-9">--%>
-<%--                <div class="panel-group">--%>
-<%--                <div class="panel panel-default">--%>
-<%--                    <div class="panel-heading">--%>
-<%--                        <div class="panel-title">--%>
-<%--                            <h2>--%>
-<%--                                1.Shipping Address--%>
-<%--                            </h2>--%>
-<%--                        </div>--%>
-<%--                        <div class="panel-body">--%>
-<%--                            <p>${student.firstName}&nbsp;${student.lastName}</p>--%>
-<%--                            <p>${student.address}</p>--%>
-<%--                            <p>${student.phoneNumber}</p>--%>
-<%--                            <p>${student.email}</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                    <div class="panel panel-default">--%>
-<%--                        <div class="panel-heading">--%>
-<%--                            <div class="panel-title">--%>
-<%--                                <h2>--%>
-<%--                                    Review items--%>
-<%--                                </h2>--%>
-<%--                            </div>--%>
-<%--                            <div class="panel-body">--%>
-<%--                                <table class="table table-hover table-striped">--%>
-<%--                                    <thead>--%>
-<%--                                    <tr>--%>
-<%--                                        <td>--%>
-<%--                                            Name:--%>
-<%--                                        </td>--%>
-<%--                                        <td>--%>
-<%--                                            Price:--%>
-<%--                                        </td>--%>
-<%--                                        <td>--%>
-<%--                                            Num:--%>
-<%--                                        </td>--%>
-<%--                                    </tr>--%>
-<%--                                    </thead>--%>
-<%--                                    <tbody>--%>
-<%--                                    <c:forEach var="item" items="${list}">--%>
-<%--                                        <tr>--%>
-<%--                                            <td>--%>
-<%--                                                <a href="${contextPath}/item/detail/${item.item.id}">${item.item.name}</a>--%>
-<%--                                            </td>--%>
-<%--                                            <td>--%>
-<%--                                                ${item.item.price}--%>
-<%--                                            </td>--%>
-<%--                                            <td>--%>
-<%--                                                ${item.num}--%>
-<%--                                            </td>--%>
-<%--                                        </tr>--%>
-<%--                                    </c:forEach>--%>
-<%--                                    </tbody>--%>
-<%--                                </table>--%>
-
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            <form action="${contextPath}/student/finishOrder/${order.id}" method="post">--%>
-<%--            <div class="col-md-3 col-sm-3">--%>
-<%--                <div class="panel panel-default">--%>
-<%--                    <div class="panel-heading">--%>
-<%--                        <div class="panel-title">--%>
-<%--                            <h2>--%>
-<%--                                Order Summary--%>
-<%--                            </h2>--%>
-<%--                        </div>--%>
-<%--                        <div class="panel-body">--%>
-<%--                            <label>Order total:</label>--%>
-<%--                            <label name="totalPrice">${order.totalPrice}</label>--%>
-<%--                            <input type="submit" value="Place Order" class="btn-warning">--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--            </form>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</body>--%>
-<%--</html>--%>
+</html>

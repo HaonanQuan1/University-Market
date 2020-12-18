@@ -7,9 +7,11 @@ com/luv2code/service/impl/ItemServiceImpl.class
 com/luv2code/DAO/ShopCartDAO.class
 com/luv2code/service/StudentService.class
 com/luv2code/service/OrderDetailService.class
+com/luv2code/interceptor/ManagerInterceptor.class
 com/luv2code/service/impl/OrderDetailServiceImpl.class
 com/luv2code/service/impl/ManagerServiceImpl.class
 com/luv2code/Entity/Student.class
+com/luv2code/interceptor/StudentInterceptor.class
 com/luv2code/DAO/impl/OrderDAOImpl.class
 com/luv2code/service/ManagerService.class
 com/luv2code/DAO/ManagerDAO.class

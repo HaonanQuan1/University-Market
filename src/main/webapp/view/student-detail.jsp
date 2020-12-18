@@ -97,7 +97,7 @@
             UserName:
         </td>
         <td>
-            <input type="text" name="username" value="${student.userName}" disabled>
+            <input type="text" name="username" value="${student.userName}">
         </td>
     </tr>
     <tr>

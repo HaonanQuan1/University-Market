@@ -5,6 +5,8 @@ import com.luv2code.Entity.Student;
 import com.luv2code.service.ItemService;
 import com.luv2code.service.OrderDetailService;
 import com.luv2code.service.ShopCartService;
+import com.luv2code.util.Paging;
+import com.luv2code.util.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/item")
@@ -27,7 +30,8 @@ public class ItemController {
     private OrderDetailService orderDetailService;
     @Autowired
     private ShopCartService shopCartService;
-
+    @Autowired
+    private PagingUtil pagingUtil;
     @GetMapping("/detail/{id}")
     public String getDetail(@PathVariable("id") int id, Model model, HttpServletRequest request){
 //        System.out.println("Id "+id);
@@ -64,11 +68,19 @@ public class ItemController {
 
         }
         String name = request.getParameter("search");
-        System.out.println("name "+name);
-        List<Item> searchResult = itemService.getItems(name);
-        System.out.println(searchResult);
-        if(searchResult.size() > 10)searchResult = searchResult.subList(0,10);
+//        System.out.println("name "+name);
+        List searchResult = itemService.getItems(name);
+        Map<String,Object> map = pagingUtil.createPage(searchResult,request.getParameter("page"));
+        List<Item> result = (List<Item>) map.get("list");
+        Paging paging = (Paging) map.get("paging");
+//        System.out.println("total "+paging.getTotalPageNum());
+//        System.out.println(map.get("paging"));
+        model.addAttribute("paging",paging);
+//        session.setAttribute("searchResult",result);
+//        System.out.println(searchResult);
+//        if(searchResult.size() > 10)searchResult = searchResult.subList(0,10);
         model.addAttribute("searchResult",searchResult);
+        model.addAttribute("paging",map.get("paging"));
         return "search-result";
     }
     @GetMapping("/upload")
@@ -107,6 +119,7 @@ public class ItemController {
         item.setDescription(description);
         item.setStudent(student);
         item.setNum(num);
+        item.setTag(request.getParameter("tag"));
         itemService.updateItem(item);
 //        item = itemService.get
         String fileName = "";

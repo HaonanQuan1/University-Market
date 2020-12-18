@@ -2,17 +2,21 @@ package com.luv2code.controller;
 
 import com.luv2code.Entity.*;
 import com.luv2code.service.*;
+import com.luv2code.util.PagingUtil;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -29,7 +33,8 @@ public class StudentController {
     private OrderDetailService orderDetailService;
     @Autowired
     private ItemService itemService;
-
+    @Autowired
+    private PagingUtil pagingUtil;
     @GetMapping("/home")
     public String getHome(HttpServletRequest request,Model model){
         if(request.getAttribute("unsafe_request") == "true") {
@@ -37,17 +42,14 @@ public class StudentController {
         }
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
-        if(student == null){
-            return "redirect:/user/show";
-
-        }
-        List<Item> list = itemService.getItemsNoStudent(student);
-        list =  list.subList(0,list.size()/2);
-        session.setAttribute("list",list);
-//        List<Item> studentlist = itemService.getItemsByStudent(student);
-
-//        for()
-//        model.addAttribute("list",list);
+//        if(student == null){
+//            return "redirect:/user/show";
+//        }
+        List list = itemService.getItemsNoStudent(student);
+        Map<String,Object> map = pagingUtil.createPage(list,request.getParameter("page"));
+        List<Item> itemList = (List<Item>) map.get("list");
+        model.addAttribute("paging",map.get("paging"));
+        session.setAttribute("list",itemList);
 
         return "customer-home";
     }
@@ -142,28 +144,28 @@ public class StudentController {
             String firstName = request.getParameter("firstname");
             String lastName = request.getParameter("lastname");
             String address = request.getParameter("address1");
+            String country = request.getParameter("country");
+            String state = request.getParameter("state");
+            String zip = request.getParameter("zip");
+            String paymentMethod = request.getParameter("paymentMethod");
+            String cardname = request.getParameter("cardname");
+            String cardnum = request.getParameter("cardnum");
+            String carddate = request.getParameter("carddate");
+            String cardcvv = request.getParameter("cardcvv");
+            if(firstName == null || firstName.equals("")||lastName == null || lastName.equals("")||address == null || address.equals("")
+            ||country == null || country.equals("")||state == null || state.equals("")||zip == null || zip.equals("")||paymentMethod == null || paymentMethod.equals("")
+            ||cardname == null || cardname.equals("")||cardnum == null || cardnum.equals("")||carddate == null || carddate.equals("")
+            ||cardcvv == null || cardcvv.equals("")){
+//                orderDetailService.deleteOrderDetailByOrder(order.getId());
+
+                return "redirect:/student/place";
+            }
             student.setFirstName(firstName);
             student.setLastName(lastName);
             student.setAddress(address);
             studentService.updateStudent(student);
         }
         List<OrderDetail> list = orderDetailService.getOrderDetails(order);
-
-//        for(OrderDetail detail:list){
-//            Item item = itemService.getItem(detail.getItem().getId());
-//            int num = detail.getNum();
-//            int remain = item.getNum() - num;
-//            System.out.println("remain "+remain);
-//            if(remain <= 0){
-//                System.out.println(item.getId());
-//                itemService.deleteItem(item.getId());
-//                System.out.println("delete successfully ");
-//            }else{
-//                item.setNum(remain);
-//                itemService.updateItem(item);
-//                System.out.println("update num successfully");
-//            }
-//        }
         shopCartService.clearShopCart(student);
 //        System.out.println("finish Order!");
         return "finish";
@@ -249,7 +251,63 @@ public class StudentController {
 //    }
 
 
+    @PostMapping("updateStudent")
+    public String updateStudent(HttpServletRequest request, Model model, @RequestParam("pic") MultipartFile multipartFile){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Student student = (Student) session.getAttribute("student");
+        if(student == null){
+            return "user-login";
+        }
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String address = request.getParameter("address");
+        String college = request.getParameter("college");
+        student.setFirstName(firstname);
+        student.setLastName(lastname);
+        student.setAddress(address);
+        student.setCollege(college);
+        String fileName = "";
+        try{
+            if(multipartFile != null && !multipartFile.isEmpty()){
+                String fileRealPath = new String("/Users/quanhaonan/Documents/Neu courses/Web Tools/Final Project/Final/src/main/webapp/resource/img/student");
 
+                int id = student.getId();
+                fileName = String.valueOf(id) + ".png";
+                File fileFolder = new File(fileRealPath);
+                if(!fileFolder.exists()){
+                    fileFolder.mkdir();
+                }
+                File file = new File(fileFolder,fileName);
+                if(file.exists()){
+                    file.delete();
+//                    File fileFolder = new File(fileRealPath);
+                    file = new File(fileFolder,fileName);
+                }
+                multipartFile.transferTo(file);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        studentService.updateStudent(student);
+        return "profile";
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(HttpServletRequest request,Model model){
+        if(request.getAttribute("unsafe_request") == "true") {
+            return "error";
+        }
+        HttpSession session = request.getSession();
+        Student student = (Student) session.getAttribute("student");
+        List<Item> items = itemService.getItemsByStudent(student);
+//        model.addAttribute("student",student);
+        model.addAttribute("items",items);
+        return "profile";
+    }
 
 
 

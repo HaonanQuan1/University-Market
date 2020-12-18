@@ -52,11 +52,6 @@
                 <a href="${contextPath}/student/home" class="btn btn-info" style="float: right">Main Page</a>
                 <div class="clearfix"></div>
                 <ul class="nav nav-tabs">
-<%--                    <li class="active">--%>
-<%--                        <a href="#tab" data-toggle="tab">--%>
-<%--                            Overview--%>
-<%--                        </a>--%>
-<%--                    </li>--%>
                     <li class="active">
                         <a href="#tab" data-toggle="tab">
                             Account
@@ -76,24 +71,12 @@
                 </ul>
                 <br>
                 <div class="tab-content">
-<%--                    <div class="tab-pane active" id="tab">--%>
-<%--                        <div class="row">--%>
-<%--                            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">--%>
-<%--                                <p>--%>
-<%--                                    <br>--%>
-<%--                                    Fusce in auctor diam. Praesent non tincidunt nisi. Nulla eu arcu ornare, gravida augue vel, commodo orci. Integer quis erat mauris. Integer nisl risus, sodales in laoreet eget, laoreet at nunc. Ut quis libero id orci semper porta ac vel ante. In nec laoreet sapien. Nunc hendrerit ligula at massa sodales, ullamcorper rutrum orci semper. Donec at massa eget odio ultrices convallis vel volutpat leo. Nulla rhoncus lacus tortor, vel tincidunt dolor eleifend et. Ut consequat elit quam, iaculis volutpat ipsum fermentum pulvinar. Pellentesque nec sem vel arcu ornare faucibus.--%>
-<%--                                    <br>--%>
-<%--                                </p>--%>
-<%--                                <hr>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
                     <div class="tab-pane active" id="tab">
                         <div class="row">
                             <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="basic">
-                                        <form class="form-horizontal" role="form" action="${contextPath}/user/updateStudent" method="post" enctype="multipart/form-data">
+                                        <form class="form-horizontal" role="form" action="${contextPath}/student/updateStudent" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="inputfullname" class="col-lg-2 control-label">First Name</label>
                                                 <div class="col-lg-10">
@@ -109,7 +92,7 @@
                                             <div class="form-group">
                                                 <label for="inputlastname" class="col-lg-2 control-label">Phone</label>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="inputphone" placeholder="phone" name="phone" value="${student.phoneNumber}">
+                                                    <input type="tel" class="form-control" id="inputphone" placeholder="phone" name="phone" value="${student.phoneNumber}">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -127,7 +110,7 @@
                                             <div class="form-group">
                                                 <label for="inputpassword" class="col-lg-2 control-label" >Password</label>
                                                 <div class="col-lg-10">
-                                                    <input type="password" class="form-control" id="inputpassword" placeholder="Password" name="password" value="${student.password}">
+                                                    <input type="password" class="form-control" id="inputpassword" placeholder="Password" name="password" value="${student.password}" pattern=".{5,12}" required title="5 to 12 chatacters">
                                                 </div>
                                             </div>
                                             <div class="form-group">
